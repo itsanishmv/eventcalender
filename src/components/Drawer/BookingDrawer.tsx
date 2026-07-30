@@ -4,12 +4,7 @@ import { useCalendarData } from '../../hooks/useCalendarData';
 import { formatDateLong, formatTime } from '../../utils/dateUtils';
 import type { Booking } from '../../types';
 
-/** Status badge color mapping */
-const STATUS_BADGE: Record<string, { className: string; label: string }> = {
-  confirmed:   { className: 'badge--confirmed',   label: 'Confirmed' },
-  tentative:   { className: 'badge--tentative',    label: 'Tentative' },
-  maintenance: { className: 'badge--maintenance',  label: 'Maintenance' },
-};
+import { StatusBadge } from '../Common/StatusBadge';
 
 export function BookingDrawer() {
   const drawerOpen = useAppStore((s) => s.drawerOpen);
@@ -91,9 +86,7 @@ export function BookingDrawer() {
                 <div className="drawer-event-header">
                   <span className={`status-dot status-dot--${primary.status}`} />
                   <h4 className="drawer-event-name">{primary.eventName}</h4>
-                  <span className={`status-badge ${STATUS_BADGE[primary.status]?.className}`}>
-                    {STATUS_BADGE[primary.status]?.label}
-                  </span>
+                  <StatusBadge status={primary.status} />
                 </div>
 
                 <div className="drawer-fields">
@@ -101,7 +94,7 @@ export function BookingDrawer() {
                   <FieldRow icon="hall" label="Hall" value={getHallName(primary.hallId)} />
                   <FieldRow icon="customer" label="Customer" value={primary.customerName} />
                   <FieldRow icon="guests" label="Guests" value={String(primary.guestCount)} />
-                  <FieldRow icon="status" label="Status" value={STATUS_BADGE[primary.status]?.label ?? primary.status} />
+                  <FieldRow icon="status" label="Status" value={<StatusBadge status={primary.status} />} />
                   <FieldRow
                     icon="start"
                     label="Start"
@@ -238,7 +231,7 @@ export function BookingDrawer() {
 
 // ─── Sub-components ──────────────────────────────────────────────
 
-function FieldRow({ icon, label, value }: { icon: string; label: string; value: string }) {
+function FieldRow({ icon, label, value }: { icon: string; label: string; value: React.ReactNode }) {
   return (
     <div className="field-row">
       <FieldIcon type={icon} />
@@ -267,15 +260,12 @@ function FieldIcon({ type }: { type: string }) {
 }
 
 function OtherBookingCard({ booking, hallName }: { booking: Booking; hallName: string }) {
-  const badge = STATUS_BADGE[booking.status];
   return (
     <div className="other-booking">
       <div className="other-booking-header">
         <span className={`status-dot status-dot--${booking.status}`} />
         <span className="other-booking-name">{booking.eventName}</span>
-        <span className={`status-badge status-badge--sm ${badge?.className}`}>
-          {badge?.label}
-        </span>
+        <StatusBadge status={booking.status} size="sm" />
       </div>
       <div className="other-booking-meta">
         <span>{hallName}</span>
