@@ -144,7 +144,32 @@ export const bookings: Booking[] = [
     endDate: '2026-08-15',
     endTime: '22:00',
   },
-
+  {
+    id: 'bk-006',
+    eventName: 'Sangeeth ceremony',
+    venueId: 'venue-1',
+    hallId: 'hall-1b',
+    customerName: 'Deccan Vintners',
+    status: 'confirmed',
+    guestCount: 80,
+    startDate: '2026-08-15',
+    startTime: '22:00',
+    endDate: '2026-08-15',
+    endTime: '23:00',
+  },
+    {
+    id: 'bk-006',
+    eventName: 'Award ceremony',
+    venueId: 'venue-1',
+    hallId: 'hall-1b',  
+    customerName: 'Deccan Vintners',
+    status: 'confirmed',
+    guestCount: 80,
+    startDate: '2026-08-15',
+    startTime: '23:00',
+    endDate: '2026-08-15',
+    endTime: '01:00',
+  },
   // ── Skyline Terrace ─────────────────────────────────────────
 
   // Full venue booking (both halls same day)

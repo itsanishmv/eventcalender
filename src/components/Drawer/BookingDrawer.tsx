@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { useCalendarData } from '../../hooks/useCalendarData';
 import { formatDateLong, formatTime } from '../../utils/dateUtils';
@@ -15,9 +16,28 @@ export function BookingDrawer() {
   const drawerDate = useAppStore((s) => s.drawerDate);
   const drawerBooking = useAppStore((s) => s.drawerBooking);
   const closeDrawer = useAppStore((s) => s.closeDrawer);
+  const addBooking = useAppStore((s) => s.addBooking);
   const venues = useAppStore((s) => s.venues);
   const halls = useAppStore((s) => s.halls);
   const dayCells = useCalendarData();
+
+  const [isAdding, setIsAdding] = useState(false);
+  const [eventName, setEventName] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [venueId, setVenueId] = useState(venues[0]?.id || '');
+  const [hallId, setHallId] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [startTime, setStartTime] = useState('09:00');
+  const [endTime, setEndTime] = useState('17:00');
+  const [guestCount, setGuestCount] = useState(50);
+
+  const handleClose = () => {
+    setIsAdding(false);
+    setEventName('');
+    setCustomerName('');
+    closeDrawer();
+  };
 
   if (!drawerOpen || !drawerDate) return null;
 
@@ -55,7 +75,7 @@ export function BookingDrawer() {
           <h3 className="drawer-title">
             {primary ? formatDateRange(primary) : formatDateLong(drawerDate)}
           </h3>
-          <button className="drawer-close" onClick={closeDrawer} aria-label="Close">
+          <button className="drawer-close" onClick={handleClose} aria-label="Close">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
@@ -113,17 +133,100 @@ export function BookingDrawer() {
                 </div>
               )}
             </>
+          ) : isAdding ? (
+            <div className="add-booking-form">
+              <h4>Add New Booking for {drawerDate}</h4>
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                addBooking({
+                  id: `bk-${Date.now()}`,
+                  eventName,
+                  customerName,
+                  venueId,
+                  hallId,
+                  status: 'confirmed',
+                  guestCount,
+                  startDate,
+                  startTime,
+                  endDate,
+                  endTime,
+                });
+                setIsAdding(false);
+                setEventName('');
+                setCustomerName('');
+              }}>
+                <div className="form-group">
+                  <label>Event Name</label>
+                  <input required value={eventName} onChange={e => setEventName(e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label>Customer Name</label>
+                  <input required value={customerName} onChange={e => setCustomerName(e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label>Venue</label>
+                  <select required value={venueId} onChange={e => {
+                    setVenueId(e.target.value);
+                    setHallId('');
+                  }}>
+                    {venues.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Hall</label>
+                  <select required value={hallId} onChange={e => setHallId(e.target.value)}>
+                    <option value="" disabled>Select Hall</option>
+                    {halls.filter(h => h.venueId === venueId).map(h => (
+                      <option key={h.id} value={h.id}>{h.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group-row">
+                  <div className="form-group">
+                    <label>Start Date</label>
+                    <input type="date" required value={startDate} onChange={e => setStartDate(e.target.value)} />
+                  </div>
+                  <div className="form-group">
+                    <label>End Date</label>
+                    <input type="date" required value={endDate} onChange={e => setEndDate(e.target.value)} />
+                  </div>
+                </div>
+                <div className="form-group-row">
+                  <div className="form-group">
+                    <label>Start Time</label>
+                    <input type="time" required value={startTime} onChange={e => setStartTime(e.target.value)} />
+                  </div>
+                  <div className="form-group">
+                    <label>End Time</label>
+                    <input type="time" required value={endTime} onChange={e => setEndTime(e.target.value)} />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label>Guests</label>
+                  <input type="number" required min="1" value={guestCount} onChange={e => setGuestCount(Number(e.target.value))} />
+                </div>
+                <div className="form-actions">
+                  <button type="button" className="btn-cancel" onClick={() => setIsAdding(false)}>Cancel</button>
+                  <button type="submit" className="btn-submit">Add Booking</button>
+                </div>
+              </form>
+            </div>
           ) : (
             <div className="drawer-empty">
               <p>No bookings on this date.</p>
+              <button className="add-booking-btn" onClick={() => {
+                setStartDate(drawerDate || '');
+                setEndDate(drawerDate || '');
+                setIsAdding(true);
+              }}>Add Booking</button>
             </div>
           )}
         </div>
 
         {/* Footer */}
-        {allBookings.length > 0 && (
+        {allBookings.length > 0 && !isAdding && (
           <div className="drawer-footer">
-            <button className="btn-view-all" onClick={closeDrawer}>
+            <button className="btn-view-all" onClick={handleClose}>
               View All Bookings
             </button>
           </div>

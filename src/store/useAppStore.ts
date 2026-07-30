@@ -26,6 +26,7 @@ interface AppState {
   goToToday: () => void;
   openDrawer: (date: string, booking?: Booking) => void;
   closeDrawer: () => void;
+  addBooking: (booking: Booking) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -73,4 +74,9 @@ export const useAppStore = create<AppState>((set) => ({
 
   closeDrawer: () =>
     set({ drawerOpen: false, drawerDate: null, drawerBooking: null }),
+
+  addBooking: (booking) =>
+    set((state) => ({
+      bookings: [...state.bookings, booking],
+    })),
 }));
