@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { buildMonthGrid, buildBookingMap, isInMonth, isToday } from '../utils/dateUtils';
 import { deriveDayStatus } from '../utils/statusUtils';
-import type { DayCell } from '../types';
+import type { DayCell, Hall } from '../types';
 
 /**
  * Derives the calendar DayCell[] from the current store state.
@@ -14,7 +14,6 @@ export function useCalendarData(): DayCell[] {
   const currentMonth = useAppStore((s) => s.currentMonth);
   const allBookings = useAppStore((s) => s.bookings);
   const venues = useAppStore((s) => s.venues);
-  const halls = useAppStore((s) => s.halls);
 
   return useMemo(() => {
     const year = currentMonth.getFullYear();
@@ -51,13 +50,13 @@ export function useCalendarData(): DayCell[] {
         isToday: isToday(dateStr),
       };
     });
-  }, [selectedVenueId, selectedHallId, currentMonth, allBookings, venues, halls]);
+  }, [selectedVenueId, selectedHallId, currentMonth, allBookings, venues]);
 }
 
 /**
  * Returns the halls belonging to the currently selected venue.
  */
-export function useVenueHalls() {
+export function useVenueHalls(): Hall[] {
   const selectedVenueId = useAppStore((s) => s.selectedVenueId);
   const allHalls = useAppStore((s) => s.halls);
 

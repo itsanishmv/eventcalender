@@ -14,17 +14,18 @@ interface AppState {
   selectedHallId: string | 'all';
   currentMonth: Date;
 
-  // ─── Modal ───────────────────────────────────────
-  modalDate: string | null;
-  modalBooking: Booking | null;
+  // ─── Drawer ──────────────────────────────────────
+  drawerOpen: boolean;
+  drawerDate: string | null;
+  drawerBooking: Booking | null;
 
   // ─── Actions ─────────────────────────────────────
   setSelectedVenue: (venueId: string) => void;
   setSelectedHall: (hallId: string | 'all') => void;
   navigateMonth: (direction: 'prev' | 'next') => void;
   goToToday: () => void;
-  openModal: (date: string, booking?: Booking) => void;
-  closeModal: () => void;
+  openDrawer: (date: string, booking?: Booking) => void;
+  closeDrawer: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -39,9 +40,10 @@ export const useAppStore = create<AppState>((set) => ({
   selectedHallId: 'all',
   currentMonth: new Date(2026, 7, 1), // August 2026
 
-  // Modal
-  modalDate: null,
-  modalBooking: null,
+  // Drawer
+  drawerOpen: false,
+  drawerDate: null,
+  drawerBooking: null,
 
   // Actions
   setSelectedVenue: (venueId) =>
@@ -62,9 +64,13 @@ export const useAppStore = create<AppState>((set) => ({
     set({ currentMonth: new Date(today.getFullYear(), today.getMonth(), 1) });
   },
 
-  openModal: (date, booking) =>
-    set({ modalDate: date, modalBooking: booking ?? null }),
+  openDrawer: (date, booking) =>
+    set({
+      drawerOpen: true,
+      drawerDate: date,
+      drawerBooking: booking ?? null,
+    }),
 
-  closeModal: () =>
-    set({ modalDate: null, modalBooking: null }),
+  closeDrawer: () =>
+    set({ drawerOpen: false, drawerDate: null, drawerBooking: null }),
 }));
