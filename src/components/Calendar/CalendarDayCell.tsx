@@ -33,6 +33,7 @@ export function CalendarDayCell({ cell }: CalendarDayCellProps) {
         <span className={`day-number ${cell.isToday ? 'day-number--today' : ''}`}>
           {dayNum}
         </span>
+        {cell.status === 'available' && <span className={`status-dot status-dot--${cell.status}`} />}
         {cell.isCurrentMonth && cell.status !== 'available' && (
           <span className={`status-dot status-dot--${cell.status}`} />
         )}
