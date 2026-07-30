@@ -9,7 +9,7 @@ interface CalendarDayCellProps {
 const MAX_VISIBLE_BOOKINGS = 2;
 
 export function CalendarDayCell({ cell }: CalendarDayCellProps) {
-  const openModal = useAppStore((s) => s.openModal);
+  const openDrawer = useAppStore((s) => s.openDrawer);
 
   const dayNum = parseInt(cell.date.split('-')[2], 10);
   const visibleBookings = cell.bookings.slice(0, MAX_VISIBLE_BOOKINGS);
@@ -17,24 +17,26 @@ export function CalendarDayCell({ cell }: CalendarDayCellProps) {
 
   return (
     <div
-      className={`day-cell ${cell.status !== 'available' ? cell.status : ''} ${
-        !cell.isCurrentMonth ? 'day-cell-outside' : ''
-      } ${cell.isToday ? 'day-cell-today' : ''}`}
-      onClick={() => openModal(cell.date)}
+      className={[
+        'day-cell',
+        !cell.isCurrentMonth && 'day-cell--outside',
+        cell.isToday && 'day-cell--today',
+      ].filter(Boolean).join(' ')}
+      onClick={() => openDrawer(cell.date)}
       role="button"
       tabIndex={0}
       aria-label={`${cell.date}, ${cell.bookings.length} bookings`}
-      onKeyDown={(e) => { if (e.key === 'Enter') openModal(cell.date); }}
+      onKeyDown={(e) => { if (e.key === 'Enter') openDrawer(cell.date); }}
     >
-      {/* Status indicator dot */}
-      {cell.status !== 'available' && cell.isCurrentMonth && (
-        <span className={`day-cell-status-dot status-dot-${cell.status}`} />
-      )}
-
-      {/* Date number */}
-      <span className={`day-number ${cell.isToday ? 'day-number-today' : ''}`}>
-        {dayNum}
-      </span>
+      {/* Day number + status dot */}
+      <div className="day-header">
+        <span className={`day-number ${cell.isToday ? 'day-number--today' : ''}`}>
+          {dayNum}
+        </span>
+        {cell.isCurrentMonth && cell.status !== 'available' && (
+          <span className={`status-dot status-dot--${cell.status}`} />
+        )}
+      </div>
 
       {/* Booking bars */}
       <div className="day-bookings">
@@ -46,7 +48,7 @@ export function CalendarDayCell({ cell }: CalendarDayCellProps) {
             className="more-badge"
             onClick={(e) => {
               e.stopPropagation();
-              openModal(cell.date);
+              openDrawer(cell.date);
             }}
           >
             +{extraCount} more

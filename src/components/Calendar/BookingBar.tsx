@@ -7,26 +7,27 @@ interface BookingBarProps {
 }
 
 /** Color map for booking status */
-const STATUS_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  confirmed:   { bg: 'var(--booking-confirmed-bg)',   text: 'var(--booking-confirmed-text)',   border: 'var(--booking-confirmed-border)' },
-  tentative:   { bg: 'var(--booking-tentative-bg)',   text: 'var(--booking-tentative-text)',   border: 'var(--booking-tentative-border)' },
-  maintenance: { bg: 'var(--booking-maintenance-bg)', text: 'var(--booking-maintenance-text)', border: 'var(--booking-maintenance-border)' },
+const STATUS_COLORS: Record<string, { bg: string; border: string }> = {
+  confirmed:   { bg: 'var(--booking-confirmed-bg)',   border: 'var(--booking-confirmed-border)' },
+  tentative:   { bg: 'var(--booking-tentative-bg)',   border: 'var(--booking-tentative-border)' },
+  maintenance: { bg: 'var(--booking-maintenance-bg)', border: 'var(--booking-maintenance-border)' },
 };
 
 export function BookingBar({ booking, date }: BookingBarProps) {
-  const openModal = useAppStore((s) => s.openModal);
+  const openDrawer = useAppStore((s) => s.openDrawer);
   const colors = STATUS_COLORS[booking.status] ?? STATUS_COLORS.confirmed;
 
   const isStart = booking.startDate === date;
   const isEnd = booking.endDate === date;
   const isSingleDay = isStart && isEnd;
 
+  // Rounded edges on start/end, flat on middle — creates seamless multi-day bars
   const borderRadius = isSingleDay
-    ? '6px'
+    ? '4px'
     : isStart
-      ? '6px 0 0 6px'
+      ? '4px 0 0 4px'
       : isEnd
-        ? '0 6px 6px 0'
+        ? '0 4px 4px 0'
         : '0';
 
   return (
@@ -34,20 +35,22 @@ export function BookingBar({ booking, date }: BookingBarProps) {
       className="booking-bar"
       style={{
         background: colors.bg,
-        color: colors.text,
         borderLeft: isStart ? `3px solid ${colors.border}` : 'none',
         borderRadius,
+        // Extend bar to cell edges for seamless multi-day continuity
+        marginLeft: isStart ? '0' : '-1px',
+        marginRight: isEnd ? '0' : '-1px',
+        paddingLeft: isStart ? '6px' : '4px',
       }}
       onClick={(e) => {
         e.stopPropagation();
-        openModal(date, booking);
+        openDrawer(date, booking);
       }}
       title={booking.eventName}
     >
-      {isStart && (
+      {isStart ? (
         <span className="booking-bar-text">{booking.eventName}</span>
-      )}
-      {!isStart && (
+      ) : (
         <span className="booking-bar-continuation" />
       )}
     </button>

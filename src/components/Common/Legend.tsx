@@ -10,7 +10,7 @@ export function Legend() {
         const config = STATUS_CONFIG[status];
         return (
           <div key={status} className="legend-item">
-            <span className={`legend-dot ${config.className}`} />
+            <span className={`legend-dot status-dot--${status}`} />
             <span className="legend-label">{config.label}</span>
           </div>
         );
