@@ -1,5 +1,6 @@
 import type { DayCell } from '../../types';
 import { useCalendarStats } from '../../hooks/useCalendarStats';
+import type { JSX } from 'react/jsx-runtime';
 
 interface StatsBarProps {
   dayCells: DayCell[];
