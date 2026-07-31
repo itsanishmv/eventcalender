@@ -2,7 +2,7 @@
 
 A modern, fast, and responsive calendar application built with React, TypeScript, and Vite. It is designed to visualize and manage bookings across multiple venues and halls seamlessly.
 
-## 🚀 Features
+##  Features
 - **Multi-Venue Support**: Filter and view bookings by specific Venues and their respective Halls.
 - **Dynamic Calendar Grid**: Computes day statuses automatically (Available, Partially Booked, Fully Booked, Maintenance).
 - **Seamless Multi-Day Bars**: Continuous booking visualization across multiple consecutive days without grid gaps.
@@ -10,7 +10,7 @@ A modern, fast, and responsive calendar application built with React, TypeScript
 - **Stats Dashboard**: Real-time summary of the current month's occupancy (Total Bookings, Available Days, etc.).
 - **Aesthetic Design System**: Pure Vanilla CSS featuring a premium Navy/Indigo color palette and micro-animations.
 
-## 🏗️ Architecture
+##  Architecture
 
 The app strictly separates the data layer from the presentation layer to ensure scalable and predictable rendering.
 
@@ -41,7 +41,7 @@ Instead of manually updating the calendar UI when data changes, the UI is purely
 - Uses CSS Variables (`--color-primary`, `--radius`, `--transition`) to enforce a strict design system.
 - Components use standard BEM-style class naming (e.g., `day-cell`, `day-cell--today`).
 
-## 🛠️ Stack & Setup
+##  Stack & Setup
 - React 19
 - TypeScript
 - Vite

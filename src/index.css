@@ -15,11 +15,11 @@
   --color-primary-600: #2563eb;
   --color-primary-500: #3b82f6;
   --color-primary-100: #dbeafe;
-  --color-primary-50:  #eff6ff;
+  --color-primary-50: #eff6ff;
 
   /* Neutral */
   --color-white: #ffffff;
-  --color-gray-50:  #f8fafc;
+  --color-gray-50: #f8fafc;
   --color-gray-100: #f1f5f9;
   --color-gray-200: #e2e8f0;
   --color-gray-300: #cbd5e1;
@@ -32,23 +32,23 @@
 
   /* Status colors */
   --color-available: #22c55e;
-  --color-partial:   #f59e0b;
-  --color-full:      #ef4444;
+  --color-partial: #f59e0b;
+  --color-full: #ef4444;
   --color-maintenance: #8b5cf6;
 
   /* Booking bar colors */
-  --booking-confirmed-bg:     rgba(37, 99, 235, 0.15);
+  --booking-confirmed-bg: rgba(37, 99, 235, 0.15);
   --booking-confirmed-border: #2563eb;
-  --booking-tentative-bg:     rgba(245, 158, 11, 0.15);
+  --booking-tentative-bg: rgba(245, 158, 11, 0.15);
   --booking-tentative-border: #f59e0b;
-  --booking-maintenance-bg:   rgba(139, 92, 246, 0.15);
+  --booking-maintenance-bg: rgba(139, 92, 246, 0.15);
   --booking-maintenance-border: #8b5cf6;
 
   /* Shadows */
-  --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md:  0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg:  0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --shadow-xl:  0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 
   /* Radius */
   --radius-sm: 6px;
@@ -341,10 +341,21 @@ select {
   display: inline-block;
 }
 
-.status-dot--available       { background: var(--color-available); }
-.status-dot--partially-booked { background: var(--color-partial); }
-.status-dot--fully-booked     { background: var(--color-full); }
-.status-dot--maintenance      { background: var(--color-maintenance); }
+.status-dot--available {
+  background: var(--color-available);
+}
+
+.status-dot--partially-booked {
+  background: var(--color-partial);
+}
+
+.status-dot--fully-booked {
+  background: var(--color-full);
+}
+
+.status-dot--maintenance {
+  background: var(--color-maintenance);
+}
 
 /* ─── Booking Bars ─────────────────────────────────────────────── */
 .day-bookings {
@@ -461,11 +472,25 @@ select {
   flex-shrink: 0;
 }
 
-.stat--total .stat-icon      { color: var(--color-primary-600); }
-.stat--available .stat-icon  { color: var(--color-available); }
-.stat--partial .stat-icon    { color: var(--color-partial); }
-.stat--full .stat-icon       { color: var(--color-full); }
-.stat--maintenance .stat-icon { color: var(--color-maintenance); }
+.stat--total .stat-icon {
+  color: var(--color-primary-600);
+}
+
+.stat--available .stat-icon {
+  color: var(--color-available);
+}
+
+.stat--partial .stat-icon {
+  color: var(--color-partial);
+}
+
+.stat--full .stat-icon {
+  color: var(--color-full);
+}
+
+.stat--maintenance .stat-icon {
+  color: var(--color-maintenance);
+}
 
 .stat-content {
   display: flex;
@@ -828,13 +853,23 @@ select {
 
 /* ─── Animations ───────────────────────────────────────────────── */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 /* ─── Responsive ───────────────────────────────────────────────── */
@@ -1007,6 +1042,11 @@ select {
 }
 
 @keyframes slideUpSheet {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
