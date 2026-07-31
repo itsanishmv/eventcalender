@@ -14,7 +14,7 @@ export function CalendarDayCell({ cell }: CalendarDayCellProps) {
   const dayNum = parseInt(cell.date.split('-')[2], 10);
   const visibleBookings = cell.bookings.slice(0, MAX_VISIBLE_BOOKINGS);
   const extraCount = cell.bookings.length - MAX_VISIBLE_BOOKINGS;
-  const hasMultipleDays = cell.date != cell.date
+  // const hasMultipleDays = cell.date != cell.date
   return (
     <div
       className={[
