@@ -273,7 +273,7 @@ select {
 /* ─── Day Cell ─────────────────────────────────────────────────── */
 .day-cell {
   min-height: 100px;
-  padding: 6px 8px;
+  padding: 6px 0;
   border-right: 1px solid var(--color-gray-200);
   border-top: 1px solid var(--color-gray-200);
   cursor: pointer;
@@ -281,7 +281,6 @@ select {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  overflow: hidden;
 }
 
 .day-cell:hover {
@@ -310,6 +309,7 @@ select {
   display: flex;
   align-items: center;
   gap: 5px;
+  padding: 0 8px;
 }
 
 .day-number {
@@ -352,7 +352,6 @@ select {
   flex-direction: column;
   gap: 2px;
   flex: 1;
-  overflow: hidden;
 }
 
 .booking-bar {
@@ -396,6 +395,7 @@ select {
   text-align: center;
   transition: background var(--transition-fast);
   align-self: flex-start;
+  margin-left: 8px;
 }
 
 .more-badge:hover {
@@ -870,7 +870,7 @@ select {
 
   .day-cell {
     min-height: 85px;
-    padding: 4px 6px;
+    /* padding: 4px 6px; */
   }
 
   .booking-bar {
@@ -924,7 +924,7 @@ select {
 
   .day-cell {
     min-height: 65px;
-    padding: 3px 4px;
+    /* padding: 3px 4px; */
   }
 
   .day-number {

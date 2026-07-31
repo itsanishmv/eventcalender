@@ -37,10 +37,14 @@ export function BookingBar({ booking, date }: BookingBarProps) {
         background: colors.bg,
         borderLeft: isStart ? `3px solid ${colors.border}` : 'none',
         borderRadius,
+        // width : "100%",
+        // width : isSingleDay ? "80%" : "100%",
         // Extend bar to cell edges for seamless multi-day continuity
-        marginLeft: isStart ? '0' : '-1px',
-        marginRight: isEnd ? '0' : '-1px',
-        paddingLeft: isStart ? '6px' : '4px',
+        // marginLeft: isStart  ? '8px' : '0px',
+        // marginRight: isEnd  ? '8px' : '-1px',
+        // paddingLeft: isStart  ? '8px' : '4px',
+        position: 'relative',
+        zIndex: 1,
       }}
       onClick={(e) => {
         e.stopPropagation();
@@ -49,7 +53,7 @@ export function BookingBar({ booking, date }: BookingBarProps) {
       title={booking.eventName}
     >
       {isStart ? (
-        <span className="booking-bar-text">{booking.eventName}</span>
+        <span className="booking-bar-text ">{booking.eventName}</span>
       ) : (
         <span className="booking-bar-continuation" />
       )}
